@@ -30,7 +30,7 @@ app.use('*', notFoundHandler);
 app.get('/location', (request, response) => {
     try {
         let city = request.query.city;
-        let data = require('./data/location.json')[1];
+        let data = require('./data/location.json')[0];
         let location = new Location(data, city);
         console.log(location);
         response.send(location);
