@@ -22,12 +22,13 @@ app.get('/location', (request, response) => {
     let data = require('./data/location.json')[0];
     let location = new Location(data, city);
     response.send(location);
+    // console.log(request);
 });
 
 app.get('/weather', (request, response) => {
     let data = require('./data/weather.json');
     let weatherArray = [];
-    data.weather.forEach(value => {
+    data.forEach(value => {
         let weather = new Weather(value);
         weatherArray.push(weather);
     });
@@ -44,7 +45,7 @@ function Location(obj, query) {
 
 function Weather(obj) {
     this.description = obj.weather.description;
-    this.date = obj.datetime;
+    this.date = obj.valid_date;
 }
 
 // start server
