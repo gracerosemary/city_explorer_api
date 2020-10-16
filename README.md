@@ -44,11 +44,12 @@ Estimate of time needed to complete: 60 minutes
 Start time: 7:20pm
 Finish time: 9:45pm
 Actual time needed to complete: 60 minutes
-#### Feature 2: Errors
-Estimate of time needed to complete:
-Start time: 
-Finish time: 
-Actual time needed to complete: 
+#### Feature 4: Errors
+Estimate of time needed to complete: 60 minutes
+Start time: 10:00pm
+Finish time: 10:15pm
+Actual time needed to complete: 15 minutes (Brandon helped me!)
 
 ## Credits and Collaborations
 Lab06 Code Reviewer / Partner: Matthew Holder
+Lab06 Helpers: Merry (TA), Brandon (peer), Ray (Instructor)
