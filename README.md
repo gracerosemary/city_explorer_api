@@ -19,13 +19,36 @@ Lab06:
 4. Confirm everything is working as expected using the console log on the browser
 
 ## Architecture
-- Front End: City Explorer (design given to us)
+- Front End: [City Explorer](https://codefellows.github.io/code-301-guide/curriculum/city-explorer-app/front-end/)
 - Libraries: Mustache, jQuery
 - Packages: Node, NPM
 - Dependencies: Express, CORS, Dotenv
 
 ## Change Log
 10.15.2020 6:29pm - Application deployed on Heroku
+
+## Time Estimates
+### Lab 06
+#### Feature 1: Repository Setup
+Estimate of time needed to complete: 15 minutes
+Start time: 6:00pm
+Finish time: 6:20pm
+Actual time needed to complete: 20 minutes
+#### Feature 2: Locations
+Estimate of time needed to complete: 60 minutes
+Start time: 6:20pm
+Finish time: 
+Actual time needed to complete: 
+#### Feature 3: Weather
+Estimate of time needed to complete:
+Start time:
+Finish time:
+Actual time needed to complete:
+#### Feature 2: Errors
+Estimate of time needed to complete:
+Start time: 
+Finish time: 
+Actual time needed to complete: 
 
 ## Credits and Collaborations
 Lab06 Code Reviewer / Partner: Matthew Holder
