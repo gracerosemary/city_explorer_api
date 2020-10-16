@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 'use strict';
 
 // dependencies
@@ -23,12 +24,27 @@ app.get('/location', (request, response) => {
     response.send(location);
 });
 
+app.get('/weather', (request, response) => {
+    let data = require('./data/weather.json');
+    let weatherArray = [];
+    data.weather.forEach(value => {
+        let weather = new Weather(value);
+        weatherArray.push(weather);
+    });
+    response.send(weatherArray);
+});
+
 // constructor
 function Location(obj, query) {
     this.lat = obj.lat;
     this.lon = obj.lon;
     this.search_query = query;
     this.location = obj.display_name;
+}
+
+function Weather(obj) {
+    this.description = obj.weather.description;
+    this.date = obj.datetime;
 }
 
 // start server
