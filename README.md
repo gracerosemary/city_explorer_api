@@ -1,24 +1,31 @@
 # City Explorer API
 
-## Lab 06
-
-**Author**: Your Name Goes Here
-**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+**Author**: Grace Choi
+**Version**: 1.0.0 
+<!-- (increment the patch/fix version number if you make more commits past your first submission) -->
 
 ## Overview
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
+Lab06: 
+1. Set up Repository
+2. Create a location route
+3. Create a weather route
+4. Create an error alert function
+
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+1. Set up repository and deploy express server to Heroku
+2. Use route callbacks to invoke functions that converts search queries, using the JSON data
+3. Return objects that contain the necessary information for client rendering
+4. Confirm everything is working as expected using the console log on the browser
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+- Front End: City Explorer (design given to us)
+- Libraries: Mustache, jQuery
+- Packages: Node, NPM
+- Dependencies: Express, CORS, Dotenv
 
 ## Change Log
-<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an examples:
-
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource.
+10.15.2020 6:29pm - Application deployed on Heroku
 
 ## Credits and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
--->
+Lab06 Code Reviewer / Partner: Matthew Holder
