@@ -16,10 +16,6 @@ const app = express();
 app.use(cors());
 
 // routes
-app.get('/', (request, response) => {
-    response.send('Hiya');
-});
-
 app.get('/location', (request, response) => {
     let city = request.query.city;
     let data = require('./data/location.json')[0];
@@ -35,4 +31,7 @@ function Location(obj, query) {
     this.location = obj.display_name;
 }
 
-console.log('hello');
+// start server
+app.listen(PORT, () => {
+    console.log(`Server is lurking on ${PORT}`);
+});
