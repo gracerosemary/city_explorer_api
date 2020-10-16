@@ -25,26 +25,41 @@ app.use(cors());
 //   });
 
 // routes
+app.use('*', notFoundHandler);
+
 app.get('/location', (request, response) => {
-    let city = request.query.city;
-    let data = require('./data/location.json')[0];
-    let location = new Location(data, city);
-    console.log(location);
-    response.send(location);
-    // console.log(request);
-});
+    try {
+        let city = request.query.city;
+        let data = require('./data/location.json')[1];
+        let location = new Location(data, city);
+        console.log(location);
+        response.send(location);
+        // console.log(request);
+    }
+    catch (error) {
+        console.log('ERROR', error);
+        response.status(500).send('Yikes. Something went wrong.');
+    }
+ });
 
 app.get('/weather', (request, response) => {
-    let data = require('./data/weather.json');
-    data = data.data;
-    let weatherArray = [];
-    data.forEach(value => {
-        let weather = new Weather(value);
-        weatherArray.push(weather);
-    });
-    console.log(weatherArray);
-    response.send(weatherArray);
+    try {
+        let data = require('./data/weather.json');
+        data = data.data;
+        let weatherArray = [];
+        data.forEach(value => {
+            let weather = new Weather(value);
+            weatherArray.push(weather);
+        });
+        // console.log(weatherArray);
+        response.send(weatherArray);
+    }
+    catch (error) {
+        console.log('ERROR', error);
+        response.status(500).send('Yikes. Something went wrong.');
+    }
 });
+
 
 // constructor
 function Location(obj, query) {
@@ -57,6 +72,10 @@ function Location(obj, query) {
 function Weather(obj) {
     this.forecast = obj.weather.description;
     this.time = obj.valid_date;
+}
+
+function notFoundHandler(request, response) {
+    response.status(404).send('huh?');
 }
 
 // start server

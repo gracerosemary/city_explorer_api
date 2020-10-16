@@ -37,13 +37,13 @@ Actual time needed to complete: 20 minutes
 #### Feature 2: Locations
 Estimate of time needed to complete: 60 minutes
 Start time: 6:20pm
-Finish time: 
-Actual time needed to complete: 
+Finish time: 7:20pm
+Actual time needed to complete: 60 minutes
 #### Feature 3: Weather
-Estimate of time needed to complete:
-Start time:
-Finish time:
-Actual time needed to complete:
+Estimate of time needed to complete: 60 minutes
+Start time: 7:20pm
+Finish time: 9:45pm
+Actual time needed to complete: 60 minutes
 #### Feature 2: Errors
 Estimate of time needed to complete:
 Start time: 
