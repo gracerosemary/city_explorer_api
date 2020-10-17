@@ -62,6 +62,29 @@ function weatherHandler(req, res) {
         });
 }
 
+app.get('/trails', trailHandler);
+function trailHandler(req, res) {
+    let key = process.env.TRAIL_API_KEY;
+    let lat = req.query.latitude;
+    let lon = req.query.longitude;
+
+
+    const URL = `https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lon}&maxDistance=10&key=${key}`;
+    
+    superagent.get(URL)
+    .then(data => {
+        console.log(data.body.trails);
+            let trail = data.body.trails.map (value => {
+                return new Trail(value);
+            });
+            res.status(200).json(trail);
+        })
+        .catch ((error) => {
+            console.log('ERROR', error);
+            res.status(500).send('Yikes. Something went wrong.');
+        });
+    }
+
 // constructor
 function Location(obj, query) {
     this.latitude = obj.lat;
@@ -73,6 +96,19 @@ function Location(obj, query) {
 function Weather(obj) {
     this.forecast = obj.weather.description;
     this.time = obj.valid_date;
+}
+
+function Trail(obj) {
+    this.name = obj.name;
+    this.location = obj.location;
+    this.length = obj.length;
+    this.stars = obj.stars;
+    this.star_votes = obj.starVotes;
+    this.summary = obj.summary;
+    this.trail_url = obj.url;
+    this.conditions = obj.conditionStatus;
+    this.condition_date = obj.conditionDate.slice(0,10);
+    this.condition_time = obj.conditionDate.slice(11,20);
 }
 
 // function notFoundHandler(req, res) {
