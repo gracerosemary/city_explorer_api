@@ -49,4 +49,5 @@ Finish time: 3:45pm
 Actual time needed to complete: 75 minutes
 
 ## Credits and Collaborations
-Lab06 Code Reviewer / Partner: Logan Jones
+Lab07 Code Reviewer / Partner: Logan Jones
+
