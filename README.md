@@ -5,16 +5,13 @@
 <!-- (increment the patch/fix version number if you make more commits past your first submission) -->
 
 ## Overview
-Lab06: 
-1. Set up Repository
-2. Create a location route
-3. Create a weather route
-4. Create an error alert function
-
+Lab07: 
+1. Refactor Location/Weather
+2. Add trails
+3. Set up error messages
 
 ## Getting Started
-1. Set up repository and deploy express server to Heroku
-2. Use route callbacks to invoke functions that converts search queries, using the JSON data
+1. Refactor existing JS (use .map & superagent)
 3. Return objects that contain the necessary information for client rendering
 4. Confirm everything is working as expected using the console log on the browser
 
@@ -22,7 +19,7 @@ Lab06:
 - Front End: [City Explorer](https://codefellows.github.io/code-301-guide/curriculum/city-explorer-app/front-end/)
 - Libraries: Mustache, jQuery
 - Packages: Node, NPM
-- Dependencies: Express, CORS, Dotenv
+- Dependencies: Express, CORS, Dotenv, SuperAgent
 
 ## Change Log
 10.15.2020 6:29pm - Application deployed on Heroku (Lab 6)
@@ -30,26 +27,26 @@ Lab06:
 
 ## Time Estimates
 ### Lab 07
-#### Feature 1: Repository Setup
-Estimate of time needed to complete: 
-Start time: 
-Finish time: 
-Actual time needed to complete: 
+#### Feature 1: Data Formatting
+Estimate of time needed to complete: 30 minutes
+Start time: 1pm
+Finish time: 1:15pm
+Actual time needed to complete: 15 minutes
 #### Feature 2: Locations
-Estimate of time needed to complete: 
-Start time: 
-Finish time: 
-Actual time needed to complete: 
+Estimate of time needed to complete: 30 minutes
+Start time: 1:15pm
+Finish time: 1:35pm
+Actual time needed to complete: 20 minutes
 #### Feature 3: Weather
-Estimate of time needed to complete: 
-Start time: 
-Finish time: 
-Actual time needed to complete: 
-#### Feature 4: Errors
-Estimate of time needed to complete: 
-Start time: 
-Finish time: 
-Actual time needed to complete: 
+Estimate of time needed to complete: 20 minutes
+Start time: 1:35pm
+Finish time: 2:00pm
+Actual time needed to complete: 25 minutes
+#### Feature 4: Trails
+Estimate of time needed to complete: 60 minutes
+Start time: 2:30pm
+Finish time: 3:45pm
+Actual time needed to complete: 75 minutes
 
 ## Credits and Collaborations
 Lab06 Code Reviewer / Partner: Logan Jones
