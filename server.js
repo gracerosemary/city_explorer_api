@@ -25,7 +25,7 @@ app.use(cors());
 //   });
 
 // routes
-app.use('*', notFoundHandler);
+// app.use('*', notFoundHandler);
 
 app.get('/location', (request, response) => {
     try {
@@ -42,24 +42,38 @@ app.get('/location', (request, response) => {
     }
  });
 
-app.get('/weather', (request, response) => {
+// app.get('/weather', (request, response) => {
+//         let data = require('./data/weather.json');
+//         data = data.data;
+//         let weatherArray = [];
+//         data.forEach(value => {
+//             let weather = new Weather(value);
+//             weatherArray.push(weather);
+//         });
+//         // console.log(weatherArray);
+//         response.send(weatherArray);
+//     }
+// );
+
+// another way to refactor weather
+app.get('/weather', weatherHandler);
+
+function weatherHandler(req, res) {
     try {
-        let data = require('./data/weather.json');
+        let data = req('./data/weather.json');
         data = data.data;
         let weatherArray = [];
         data.forEach(value => {
             let weather = new Weather(value);
             weatherArray.push(weather);
         });
-        // console.log(weatherArray);
-        response.send(weatherArray);
+        res.send(weatherArray);
     }
-    catch (error) {
+    catch (error){
         console.log('ERROR', error);
-        response.status(500).send('Yikes. Something went wrong.');
+        res.status(500).send('Yikes. Something went wrong.');
     }
-});
-
+}
 
 // constructor
 function Location(obj, query) {
@@ -74,9 +88,9 @@ function Weather(obj) {
     this.time = obj.valid_date;
 }
 
-function notFoundHandler(request, response) {
-    response.status(404).send('huh?');
-}
+// function notFoundHandler(request, response) {
+//     response.status(404).send('huh?');
+// }
 
 // start server
 app.listen(PORT, () => {
