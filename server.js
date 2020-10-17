@@ -5,7 +5,8 @@
 require('dotenv').config();
 
 const express = require('express');
-const cors= require('cors');
+const cors = require('cors');
+const superagent = require('superagent');
 
 
 // declare port for server to listen on
@@ -17,30 +18,27 @@ const app = express();
 // use cors
 app.use(cors());
 
-// test route
-// app.get('/testing', (request, response) => {
-//     console.log('Im here.');
-//     const test = {test: `this works on PORT${PORT}`}
-//     response.send(test);
-//   });
-
 // routes
 // app.use('*', notFoundHandler);
 
 app.get('/location', locationHandler);
 function locationHandler(req, res) {
-    try {
-        let city = req.query.city;
-        let data = require('./data/location.json')[0];
-        let location = new Location(data, city);
-        console.log(location);
-        res.send(location);
-    }
-    catch (error) {
-        console.log('ERROR', error);
-        res.status(500).send('Yikes. Something went wrong.');
-    }
- }
+    let city = req.query.city;
+    let key = PROCESS.ENV.GEOCODE_API_KEY;
+
+    const URL = //url
+
+    superagent.get(URL)
+        .then(data => {
+            console.log(data.body[0]);
+            let location = new Location (city, data.body[0]);
+            res.status(200).json(location);
+        });
+        .catch ((error) => {
+            console.log('ERROR', error);
+            res.status(500).send('Yikes. Something went wrong.');
+        })
+}
 
 
 app.get('/weather', weatherHandler);
