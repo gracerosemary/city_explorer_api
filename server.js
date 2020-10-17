@@ -8,7 +8,7 @@ const express = require('express');
 const cors= require('cors');
 
 
-// declare port for server to listen on 
+// declare port for server to listen on
 const PORT = process.env.PORT || 3000;
 
 // instanciate express
@@ -27,47 +27,37 @@ app.use(cors());
 // routes
 // app.use('*', notFoundHandler);
 
-app.get('/location', (request, response) => {
+app.get('/location', locationHandler);
+function locationHandler(req, res) {
     try {
-        let city = request.query.city;
+        let city = req.query.city;
         let data = require('./data/location.json')[0];
         let location = new Location(data, city);
         console.log(location);
-        response.send(location);
-        // console.log(request);
+        res.send(location);
     }
     catch (error) {
         console.log('ERROR', error);
-        response.status(500).send('Yikes. Something went wrong.');
+        res.status(500).send('Yikes. Something went wrong.');
     }
- });
+ }
 
-// app.get('/weather', (request, response) => {
-//         let data = require('./data/weather.json');
-//         data = data.data;
-//         let weatherArray = [];
-//         data.forEach(value => {
-//             let weather = new Weather(value);
-//             weatherArray.push(weather);
-//         });
-//         // console.log(weatherArray);
-//         response.send(weatherArray);
-//     }
-// );
 
-// another way to refactor weather
 app.get('/weather', weatherHandler);
-
 function weatherHandler(req, res) {
     try {
-        let data = req('./data/weather.json');
+        let data = require('./data/weather.json');
         data = data.data;
-        let weatherArray = [];
-        data.forEach(value => {
-            let weather = new Weather(value);
-            weatherArray.push(weather);
+        // let weatherArray = [];
+        // data.forEach(value => {
+        //     let weather = new Weather(value);
+        //     weatherArray.push(weather);
+        // });
+        // res.send(weatherArray);
+        let weather = data.map(value => {
+            return new Weather(value);
         });
-        res.send(weatherArray);
+        res.send(weather);
     }
     catch (error){
         console.log('ERROR', error);
@@ -88,8 +78,8 @@ function Weather(obj) {
     this.time = obj.valid_date;
 }
 
-// function notFoundHandler(request, response) {
-//     response.status(404).send('huh?');
+// function notFoundHandler(req, res) {
+//     res.status(404).send('huh?');
 // }
 
 // start server
