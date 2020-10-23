@@ -43,10 +43,10 @@ Start time: 2:45pm
 Finish time: 2:55pm
 Total time needed to complete: 2 hr 40 minutes (Thank you, Logan!)
 #### Feature 3: Deploy
-Estimate of time needed to complete: 
-Start time: 
-Finish time:
-Actual time needed to complete:
+Estimate of time needed to complete: 15 minutes
+Start time: 3:30pm
+Finish time: 3:45pm
+Actual time needed to complete: 15 minutes
 
 ## Credits and Collaborations
 Lab08 Code Reviewer / Partner: Scott Falbo
