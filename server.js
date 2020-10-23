@@ -7,7 +7,6 @@ const express = require('express');
 const superagent = require('superagent');
 const cors = require('cors');
 const pg = require('pg');
-const e = require('express');
 
 // declare port for server to listen on
 const PORT = process.env.PORT || 3000;
@@ -39,10 +38,10 @@ function locationHandler(req, res) {
             // console.log(data);
 
             // if statement - check the database for location information FIRST and send the location object in the response to the client (NEED TO DO!)
-            if (data ---- need to see if data has rows) {
+            // if (data ---- need to see if data has rows) {
             res.status(200).json(data.rows);
             // else statement - request data from API only if it does not exist in database (NEED TO DO!)
-            } else {
+            // } else {
                 superagent.get(URL)
                     .then(data => {
                         // console.log(data.body[0]);
@@ -53,7 +52,7 @@ function locationHandler(req, res) {
                         console.log('ERROR', error);
                         res.status(500).send('Yikes. Something went wrong.');
                     });
-            }
+            // }
         })
 }
 
@@ -132,7 +131,13 @@ function notFoundHandler(req, res) {
     res.status(404).send('huh?');
 }
 
-// start server
-app.listen(PORT, () => {
-    console.log(`Server is lurking on ${PORT}`);
-});
+// connect to database and start our server
+client.connect()
+    .then( () => {
+        app.listen(PORT, () => {
+            console.log(`Server is lurking on ${PORT}`);
+        });
+    })
+    .catch(err => {
+        console.log('ERROR', err);
+    });

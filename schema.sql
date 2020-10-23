@@ -1,7 +1,11 @@
--- DROP TABLE if exists people;
+-- checks to see if people exists and if it does, drop it
+DROP TABLE if exists location;
 
--- CREATE TABLE poeple (
---     id SERIAL PRIMARY KEY,
---     first_name VARCHAR(255),
---     last_name VARCHAR(255)
--- );
+-- recreate what we need
+CREATE TABLE location (
+    search_query SERIAL PRIMARY KEY, 
+    lat VARCHAR(255), 
+    lon VARCHAR(255), 
+    formatted_query VARCHAR(255)
+);
+
