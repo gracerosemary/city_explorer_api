@@ -34,10 +34,10 @@ Start time: 7:30PM
 Finish time: 8:00pm
 Actual time needed to complete: 30 minutes
 #### Feature 2: Server
-Estimate of time needed to complete: 60 minutes
+Estimate of time needed to complete: 90 minutes
 Start time: 8:30pm
-Finish time: 10:00pm
-Actual time needed to complete: 1 hr 30 minutes
+Finish time: 11:00pm
+Actual time needed to complete: 2 hr 30 minutes (still not working and need to finish tomorrow)
 #### Feature 3: Deploy
 Estimate of time needed to complete: 
 Start time: 
