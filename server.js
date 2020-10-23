@@ -21,7 +21,7 @@ app.use(cors());
 const client = new pg.Client(process.env.DATABASE_URL);
 
 // routes
-app.use('*', notFoundHandler);
+// app.use('*', notFoundHandler);
 
 app.get('/location', locationHandler);
 function locationHandler(req, res) {
@@ -29,31 +29,36 @@ function locationHandler(req, res) {
     let key = process.env.GEOCODE_API_KEY;
     const URL = `https://us1.locationiq.com/v1/search.php/?key=${key}&q=${city}&format=json`;
 
-    // insert sql syntax to select the city taken from the query (NEED TO DO!)
-    let SQL = `SELECT * FROM WHERE etc - only one value($1)`;
+    let SQL = `SELECT * FROM location WHERE search_query LIKE ($1)`;
     let safeValues = [city];
 
     client.query(SQL, safeValues)
         .then(data => {
             // console.log(data);
-
-            // if statement - check the database for location information FIRST and send the location object in the response to the client (NEED TO DO!)
-            // if (data ---- need to see if data has rows) {
-            res.status(200).json(data.rows);
-            // else statement - request data from API only if it does not exist in database (NEED TO DO!)
-            // } else {
+            if (data.rowCount !== 0) {
+            res.status(200).json(data.rows[0]);
+            // request data from API only if it does not exist in database
+            } else {
                 superagent.get(URL)
                     .then(data => {
                         // console.log(data.body[0]);
                         let location = new Location (data.body[0], city);
                         res.status(200).json(location);
+                        // console.log(location);
+                        let sql = `INSERT INTO location (latitude, longitude, search_query, formatted_query) VALUES ($1, $2, $3, $4) RETURNING *`;
+                        // create parametrized queries
+                        let safeValues = [location.latitude, location.longitude, location.search_query, location.formatted_query];
+                        client.query(sql, safeValues)
+                            .then( results => {
+                                console.log(results);
+                            });
                     })
                     .catch ((error) => {
                         console.log('ERROR', error);
                         res.status(500).send('Yikes. Something went wrong.');
                     });
-            // }
-        })
+            }
+        });
 }
 
 
@@ -127,9 +132,9 @@ function Trail(obj) {
     this.condition_time = obj.conditionDate.slice(11,20);
 }
 
-function notFoundHandler(req, res) {
-    res.status(404).send('huh?');
-}
+// function notFoundHandler(req, res) {
+//     res.status(404).send('huh?');
+// }
 
 // connect to database and start our server
 client.connect()
