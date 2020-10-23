@@ -3,11 +3,10 @@
 
 // dependencies
 require('dotenv').config();
-
 const express = require('express');
 const superagent = require('superagent');
 const cors = require('cors');
-
+const pg = require('pg');
 
 // declare port for server to listen on
 const PORT = process.env.PORT || 3000;
@@ -18,6 +17,9 @@ const app = express();
 // use cors
 app.use(cors());
 
+// create our postgres client
+const client = new pg.Client(process.env.DATABASE_URL);
+
 // routes
 // app.use('*', notFoundHandler);
 
@@ -25,18 +27,37 @@ app.get('/location', locationHandler);
 function locationHandler(req, res) {
     let city = req.query.city;
     let key = process.env.GEOCODE_API_KEY;
-
     const URL = `https://us1.locationiq.com/v1/search.php/?key=${key}&q=${city}&format=json`;
 
-    superagent.get(URL)
+    let SQL = `SELECT * FROM location WHERE search_query LIKE ($1)`;
+    let safeValues = [city];
+
+    client.query(SQL, safeValues)
         .then(data => {
-            console.log(data.body[0]);
-            let location = new Location (data.body[0], city);
-            res.status(200).json(location);
-        })
-        .catch ((error) => {
-            console.log('ERROR', error);
-            res.status(500).send('Yikes. Something went wrong.');
+            // console.log(data);
+            if (data.rowCount !== 0) {
+            res.status(200).json(data.rows[0]);
+            // request data from API only if it does not exist in database
+            } else {
+                superagent.get(URL)
+                    .then(data => {
+                        // console.log(data.body[0]);
+                        let location = new Location (data.body[0], city);
+                        res.status(200).json(location);
+                        // console.log(location);
+                        let sql = `INSERT INTO location (latitude, longitude, search_query, formatted_query) VALUES ($1, $2, $3, $4) RETURNING *`;
+                        // create parametrized queries
+                        let safeValues = [location.latitude, location.longitude, location.search_query, location.formatted_query];
+                        client.query(sql, safeValues)
+                            .then( results => {
+                                console.log(results);
+                            });
+                    })
+                    .catch ((error) => {
+                        console.log('ERROR', error);
+                        res.status(500).send('Yikes. Something went wrong.');
+                    });
+            }
         });
 }
 
@@ -70,7 +91,7 @@ function trailHandler(req, res) {
 
 
     const URL = `https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lon}&maxDistance=10&key=${key}`;
-    
+
     superagent.get(URL)
     .then(data => {
         console.log(data.body.trails);
@@ -115,7 +136,13 @@ function Trail(obj) {
 //     res.status(404).send('huh?');
 // }
 
-// start server
-app.listen(PORT, () => {
-    console.log(`Server is lurking on ${PORT}`);
-});
+// connect to database and start our server
+client.connect()
+    .then( () => {
+        app.listen(PORT, () => {
+            console.log(`Server is lurking on ${PORT}`);
+        });
+    })
+    .catch(err => {
+        console.log('ERROR', err);
+    });
