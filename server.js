@@ -85,22 +85,30 @@ function moviesHandler(req, res) {
 app.get('/yelp', yelpHandler);
 function yelpHandler(req, res) {
     let city = req.query.search_query;
+    let numPerPage = 5;
+    let page = req.query.page || 1;
+    let start = ((page - 1) * numPerPage + 1);
     const URL = 'https://api.yelp.com/v3/businesses/search';
 
     const queryParams = {
         location: city,
-        term: 'restaurants'
+        term: 'restaurants',
+        limit: 5,
+        start: start
     };
 
     superagent.get(URL)
+    // .set({'Authorization':`Bearer ${process.env.YELP_API_KEY}`}) --- Scott used and said this way worked for him too!
     .auth(process.env.YELP_API_KEY, {type: 'bearer'})
     .query(queryParams)
     .then(data => {
-        console.log(data.body);
-        let yelp = data.body.businesses.map(value => {
-            return new Yelp(value);
+        // console.log(data.body)
+        const results = data.body.businesses;
+        const yelpData = [];
+        results.forEach(entry => {
+            yelpData.push(new Yelp(entry));
         });
-        res.status(200).json(yelp);
+        res.status(200).json(yelpData);
     })
     .catch((error) => {
         console.log('ERROR', error);
