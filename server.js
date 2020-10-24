@@ -61,6 +61,27 @@ function locationHandler(req, res) {
         });
 }
 
+app.get('/movies', moviesHandler);
+function moviesHandler(req, res) {
+    let key = process.env.MOVIE_API_KEY;
+    let city = req.query.search_query;
+
+    const URL = `https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&query=${city}`;
+
+    superagent.get(URL)
+        .then(data => {
+            console.log(data.body.results);
+            let movies = data.body.results.map(value => {
+                return new Movies(value);
+            });
+            res.status(200).json(movies);
+        })
+        .catch((error) => {
+            console.log('ERROR', error);
+            res.status(500).send('Yikes. Something went wrong.');
+        });
+}
+
 
 app.get('/weather', weatherHandler);
 function weatherHandler(req, res) {
@@ -77,7 +98,7 @@ function weatherHandler(req, res) {
             });
             res.status(200).json(weather);
         })
-        .catch ((error) => {
+        .catch((error) => {
             console.log('ERROR', error);
             res.status(500).send('Yikes. Something went wrong.');
         });
@@ -112,6 +133,16 @@ function Location(obj, query) {
     this.longitude = obj.lon;
     this.search_query = query;
     this.formatted_query = obj.display_name;
+}
+
+function Movies(obj) {
+    this.title = obj.original_title;
+    this.overview = obj.overview;
+    this.average_votes = obj.vote_average;
+    this.total_votes = obj.vote_count;
+    this.image_url = `https://image.tmdb.org/t/p/w500${obj.poster_path}`;
+    this.popularity = obj.popularity;
+    this.released_on = obj.release_date;
 }
 
 function Weather(obj) {
