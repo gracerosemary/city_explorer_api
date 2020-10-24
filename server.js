@@ -61,6 +61,61 @@ function locationHandler(req, res) {
         });
 }
 
+app.get('/movies', moviesHandler);
+function moviesHandler(req, res) {
+    let key = process.env.MOVIE_API_KEY;
+    let city = req.query.search_query;
+
+    const URL = `https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&query=${city}`;
+
+    superagent.get(URL)
+        .then(data => {
+            console.log(data.body.results);
+            let movies = data.body.results.map(value => {
+                return new Movies(value);
+            });
+            res.status(200).json(movies);
+        })
+        .catch((error) => {
+            console.log('ERROR', error);
+            res.status(500).send('Yikes. Something went wrong.');
+        });
+}
+
+app.get('/yelp', yelpHandler);
+function yelpHandler(req, res) {
+    let city = req.query.search_query;
+    let numPerPage = 5;
+    let page = req.query.page || 1;
+    let start = ((page - 1) * numPerPage + 1);
+    const URL = 'https://api.yelp.com/v3/businesses/search';
+
+    const queryParams = {
+        location: city,
+        term: 'restaurants',
+        limit: 5,
+        start: start
+    };
+
+    superagent.get(URL)
+    // .set({'Authorization':`Bearer ${process.env.YELP_API_KEY}`}) --- Scott used and said this way worked for him too!
+    .auth(process.env.YELP_API_KEY, {type: 'bearer'})
+    .query(queryParams)
+    .then(data => {
+        // console.log(data.body)
+        const results = data.body.businesses;
+        const yelpData = [];
+        results.forEach(entry => {
+            yelpData.push(new Yelp(entry));
+        });
+        res.status(200).json(yelpData);
+    })
+    .catch((error) => {
+        console.log('ERROR', error);
+        res.status(500).send('Yikes. Something went wrong.');
+    });
+}
+
 
 app.get('/weather', weatherHandler);
 function weatherHandler(req, res) {
@@ -77,7 +132,7 @@ function weatherHandler(req, res) {
             });
             res.status(200).json(weather);
         })
-        .catch ((error) => {
+        .catch((error) => {
             console.log('ERROR', error);
             res.status(500).send('Yikes. Something went wrong.');
         });
@@ -112,6 +167,24 @@ function Location(obj, query) {
     this.longitude = obj.lon;
     this.search_query = query;
     this.formatted_query = obj.display_name;
+}
+
+function Movies(obj) {
+    this.title = obj.original_title;
+    this.overview = obj.overview;
+    this.average_votes = obj.vote_average;
+    this.total_votes = obj.vote_count;
+    this.image_url = `https://image.tmdb.org/t/p/w500${obj.poster_path}`;
+    this.popularity = obj.popularity;
+    this.released_on = obj.release_date;
+}
+
+function Yelp(obj) {
+    this.name = obj.name;
+    this.image_url = obj.image_url;
+    this.price = obj.price;
+    this.rating = obj.rating;
+    this.url = obj.url;
 }
 
 function Weather(obj) {

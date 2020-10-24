@@ -1,18 +1,18 @@
 # City Explorer API
 
 **Author**: Grace Choi
-**Version**: 1.0.4
+**Version**: 1.0.5
 
 ## Overview
-Lab08: 
-1. Database Setup & Table Creation
-2. Revise functions to check database for location information and send the location object to the client. If it does not exist, route to API for request and then save it in the database. 
-3. Deploy on Heroku
+Lab09: 
+1. Create Movies
+2. Create Yelp
+3. Pagination
 
 ## Getting Started
-1. Create a database environment variable & a schema.sql file and connect to postgres.
-2. Use if/else statements within function to cache queries and store them if it's not already stored. 
-4. Deploy on Heroku and replicate the local database to Heroku. Confirm server is responding as expected. 
+1. Add movie environment variable, create route, create corresponding constructor
+2. Add yelp environment variable, create route using bearer token, create corresponding constructor
+3. Paginate yelp so that only 5 results show per "page"
 
 ## Architecture
 - Front End: [City Explorer](https://codefellows.github.io/code-301-guide/curriculum/city-explorer-app/front-end/)
@@ -25,29 +25,25 @@ Lab08:
 10.16.2020 2:34pm - Updated application deployed (Lab 7)
 10.21.2020 8:00pm - Finished up Feature 1 (Lab 8)
 10.22.2020 11:00pm - Finished up Feature 2 (Lab 8)
+10.24.2020 4:30pm - Finished up Feature 1-3 (Lab 9)
 
 ## Time Estimates
-### Lab 08
-#### Feature 1: Database
+### Lab 09
+#### Feature 1: Movies
 Estimate of time needed to complete: 30 minutes
-Start time: 7:30PM
-Finish time: 8:00pm
+Start time: 1:30PM
+Finish time: 2:00pm
 Actual time needed to complete: 30 minutes
-#### Feature 2: Server
-Estimate of time needed to complete: 90 minutes
-Start time: 8:30pm
-Finish time: 11:00pm
-Actual time needed to complete: 2 hr 30 minutes 
-(Second Day)
-Start time: 2:45pm
-Finish time: 2:55pm
-Total time needed to complete: 2 hr 40 minutes (Thank you, Logan!)
-#### Feature 3: Deploy
+#### Feature 2: Yelp
+Estimate of time needed to complete: 60 minutes
+Start time: 2:30pm
+Finish time: 4:00pm
+Actual time needed to complete: 1 hr 30 minutes 
+#### Feature 3: Paginate
 Estimate of time needed to complete: 15 minutes
-Start time: 3:30pm
-Finish time: 3:45pm
+Start time: 4:00pm
+Finish time: 4:15pm
 Actual time needed to complete: 15 minutes
 
 ## Credits and Collaborations
-Lab08 Code Reviewer / Partner: Scott Falbo
-Lab08 Helper: Logan Jones (float issue fixed!)
+Lab09 Code Reviewer / Partner: Scott Falbo
