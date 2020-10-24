@@ -82,6 +82,32 @@ function moviesHandler(req, res) {
         });
 }
 
+app.get('/yelp', yelpHandler);
+function yelpHandler(req, res) {
+    let city = req.query.search_query;
+    const URL = 'https://api.yelp.com/v3/businesses/search';
+
+    const queryParams = {
+        location: city,
+        term: 'restaurants'
+    };
+
+    superagent.get(URL)
+    .auth(process.env.YELP_API_KEY, {type: 'bearer'})
+    .query(queryParams)
+    .then(data => {
+        console.log(data.body);
+        let yelp = data.body.businesses.map(value => {
+            return new Yelp(value);
+        });
+        res.status(200).json(yelp);
+    })
+    .catch((error) => {
+        console.log('ERROR', error);
+        res.status(500).send('Yikes. Something went wrong.');
+    });
+}
+
 
 app.get('/weather', weatherHandler);
 function weatherHandler(req, res) {
@@ -143,6 +169,14 @@ function Movies(obj) {
     this.image_url = `https://image.tmdb.org/t/p/w500${obj.poster_path}`;
     this.popularity = obj.popularity;
     this.released_on = obj.release_date;
+}
+
+function Yelp(obj) {
+    this.name = obj.name;
+    this.image_url = obj.image_url;
+    this.price = obj.price;
+    this.rating = obj.rating;
+    this.url = obj.url;
 }
 
 function Weather(obj) {
